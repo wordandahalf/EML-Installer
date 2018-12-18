@@ -91,6 +91,8 @@ public class EMLInstallerWorker implements Runnable {
 					    	System.exit(0);
 					    }
 					});
+					
+					return;
 				}
 				
 				String emlName = "eml-" + this.emlVersion + ".jar";
@@ -100,14 +102,11 @@ public class EMLInstallerWorker implements Runnable {
 				);
 				WebFetcher.downloadFile(UPDATE_SERVER + "eml-" + this.emlVersion + ".jar",
 						new File(this.installLocation, emlName).getAbsolutePath());
-				MainInterfaceController.instance.progressBar.setProgress(0.3);
+				MainInterfaceController.instance.progressBar.setProgress(0.5);
 				
 				MainInterfaceController.instance.progressBar.setTooltip(
 						new Tooltip("Downloading " + Main.APPLICATION_FILE + " from " + UPDATE_SERVER)
 				);
-				WebFetcher.downloadFile(UPDATE_SERVER + "eml-wrapper-" + this.wrapperVersion + ".jar",
-						new File(this.installLocation, "eml-wrapper-" + this.wrapperVersion + ".jar").getAbsolutePath());
-				MainInterfaceController.instance.progressBar.setProgress(0.6);
 				
 				MainInterfaceController.instance.progressBar.getTooltip().setText("Creating configuration file");
 				if(Main.APPLICATION_CONFIGURATION.exists())
@@ -121,10 +120,22 @@ public class EMLInstallerWorker implements Runnable {
 				writer.close();
 				
 				MainInterfaceController.instance.progressBar.setProgress(1);
+				
+				Platform.runLater(new Runnable() {
+				    @Override
+				    public void run() {
+				    	Alert alert = new Alert(AlertType.INFORMATION);
+				    	alert.setTitle("Information");
+				    	alert.setHeaderText("EML-Wrapper v" + wrapperVersion + " with EML v" + wrapperVersion + " has successfully been installed.");
+				    	
+				    	alert.showAndWait();
+				    	
+				    	System.exit(0);
+				    }
+				});
 			} catch (IOException e) {
 				AlertUtils.runAlert(AlertType.ERROR, "Error", e.toString(), true);
 			}
-			
 		}
 	}
 }
