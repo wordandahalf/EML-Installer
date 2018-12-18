@@ -1,25 +1,15 @@
 package io.github.wordandahalf.equilinox.modloader.installer;
 
-import java.io.IOException;
+import io.github.wordandahalf.equilinox.modloader.installer.gui.MainInterfaceController;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
-import io.github.wordandahalf.equilinox.modloader.installer.utils.WindowsUtils;
-import io.github.wordandahalf.equilinox.modloader.installer.web.WebFetcher;
-
-public class Main {
-	public static void main(String[] args) throws IOException {
-		System.out.println("Running on " + System.getProperty("os.name"));
-		
-		if(System.getProperty("os.name").toLowerCase().contains("windows")) {
-			String steamDirectory = WindowsUtils.readRegistry("HKEY_CURRENT_USER\\Software\\Valve\\Steam", "SteamPath");
-		
-			System.out.println("Steam is installed at " + steamDirectory);
-		}
-		
-		if(WebFetcher.canConnect())
-			System.out.println("The update server is online!");
-		
-		for(String s : WebFetcher.asString(WebFetcher.UPDATE_FILE)) {
-			System.out.println(s);
-		}
+public class Main extends Application {
+	public static final String APPLICATION_NAME = "EML Installer";
+	public static final String APPLICATION_VERSION = "0.1.0";
+	
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+		new MainInterfaceController().open(primaryStage);
 	}
 }
