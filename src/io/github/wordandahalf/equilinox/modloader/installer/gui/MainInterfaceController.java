@@ -29,7 +29,7 @@ import javafx.stage.Window;
 public class MainInterfaceController {
 	public static MainInterfaceController instance;
 	
-	private Window window;
+	public Window window;
 	
 	private File equilinoxDirectory;
 	
@@ -63,6 +63,9 @@ public class MainInterfaceController {
 		chooser.setTitle("Find your Equilinox directory");
 		equilinoxDirectory = chooser.showDialog(window);
 		
+		if(equilinoxDirectory == null)
+			return;
+		
 		if(equilinoxDirectory.listFiles().length > 0) {
 			directoryField.setText(equilinoxDirectory.getAbsolutePath());
 			directoryField.setTooltip(new Tooltip(directoryField.getText()));
@@ -81,7 +84,7 @@ public class MainInterfaceController {
 	}
 	
 	@FXML
-	private ProgressBar progressBar;
+	public ProgressBar progressBar;
 	
 	@FXML
 	private Label progressText;

@@ -3,3 +3,8 @@
 .project
 bin/
 .settings/
+build/build/
+build/dist/
+build/externalLibs/
+build/project/
+build/projectRefs/
