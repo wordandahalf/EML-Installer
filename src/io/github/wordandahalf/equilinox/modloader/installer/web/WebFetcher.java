@@ -13,11 +13,13 @@ import java.util.ArrayList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
-public class WebFetcher {
+public class WebFetcher {	
 	public static void downloadFile(String URL, String path) throws IOException {
 		URL website = new URL(URL);
 		
-		try (InputStream is = website.openStream(); ReadableByteChannel rbc = Channels.newChannel(is); FileOutputStream fos = new FileOutputStream(path)) {
+		try (InputStream is = website.openStream();
+				ReadableByteChannel rbc = Channels.newChannel(is);
+				FileOutputStream fos = new FileOutputStream(path)) {
 			fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
 		}
 	}
@@ -29,7 +31,7 @@ public class WebFetcher {
 			site = new URL(URL);
 		} catch(Exception e) {
 			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("");
+			alert.setTitle("Error");
 			alert.setHeaderText("This error should never happen! The provided download URL is invalid! (" + URL + ")");
 			alert.show();
 		}

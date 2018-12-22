@@ -22,6 +22,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -59,7 +60,8 @@ public class MainInterfaceController {
 	private Button browseButton;
 	@FXML
 	public void openFileSelectionMenu(MouseEvent e) {
-		DirectoryChooser chooser = new DirectoryChooser ();
+		DirectoryChooser chooser = new DirectoryChooser();
+		
 		chooser.setTitle("Find your Equilinox directory");
 		equilinoxDirectory = chooser.showDialog(window);
 		
@@ -76,6 +78,7 @@ public class MainInterfaceController {
 		
 			if(!alert.showAndWait().get().equals(ButtonType.OK)) {
 				openFileSelectionMenu(e);
+				return;
 			}
 			
 			directoryField.setText(equilinoxDirectory.getAbsolutePath());
@@ -101,6 +104,7 @@ public class MainInterfaceController {
 		double width = size.getWidth() / 4.0;
 		double height = (width / 6.0) * 3.0;
 		
+		primaryStage.getIcons().add(new Image(MainInterfaceController.class.getResourceAsStream("icon.png")));
 		primaryStage.setScene(new Scene(root, width, height));
         primaryStage.setResizable(false);
         primaryStage.setTitle(Main.APPLICATION_NAME + " v" + Main.APPLICATION_VERSION);
